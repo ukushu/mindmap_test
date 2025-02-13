@@ -55,11 +55,15 @@ struct FilesListView: View {
     }
     
     var TopMenu: some View {
-        Button("Add note") {
+        Button("Add MindMap") {
             list.addNote()
         }
     }
 }
+
+/////////////////////
+/// Preview
+////////////////////
 
 struct FilesListView_Previews: PreviewProvider {
     static var previews: some View {

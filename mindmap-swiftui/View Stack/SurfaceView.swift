@@ -5,13 +5,13 @@ struct SurfaceView: View {
     @ObservedObject var mesh: Mesh
     @ObservedObject var selection: SelectionHandler
     
-        //dragging
+    //dragging
     @State var portalPosition: CGPoint = .zero
     @State var dragOffset: CGSize = .zero
     @State var isDragging: Bool = false
     @State var isDraggingMesh: Bool = false
     
-        //zooming
+    //zooming
     @State var zoomScale: CGFloat = 1.0
     @State var initialZoomScale: CGFloat?
     @State var initialPortalPosition: CGPoint?
@@ -57,111 +57,8 @@ struct SurfaceView: View {
     }
 }
 
-
-
-private extension SurfaceView {
-    // 1
-    func distance(from pointA: CGPoint, to pointB: CGPoint) -> CGFloat {
-        let xdelta = pow(pointA.x - pointB.x, 2)
-        let ydelta = pow(pointA.y - pointB.y, 2)
-        
-        return sqrt(xdelta + ydelta)
-    }
-    
-    // 2
-    func hitTest(point: CGPoint, parent: CGSize) -> Node? {
-        for node in mesh.nodes {
-            let endPoint = node.position
-                .scaledFrom(zoomScale)
-                .alignCenterInParent(parent)
-                .translatedBy(x: portalPosition.x, y: portalPosition.y)
-            let dist =  distance(from: point, to: endPoint) / zoomScale
-            
-            //3
-            if dist < NodeView.width / 2.0 {
-                return node
-            }
-        }
-        return nil
-    }
-    
-    // 4
-    func processNodeTranslation(_ translation: CGSize) {
-        guard !selection.draggingNodes.isEmpty else { return }
-        let scaledTranslation = translation.scaledDownTo(zoomScale)
-        mesh.processNodeTranslation(
-            scaledTranslation,
-            nodes: selection.draggingNodes)
-    }
-    
-    func processDragChange(_ value: DragGesture.Value, containerSize: CGSize) {
-        // 1
-        if !isDragging {
-            isDragging = true
-            
-            if let node = hitTest(
-                point: value.startLocation,
-                parent: containerSize) {
-                isDraggingMesh = false
-                selection.selectNode(node)
-                // 2
-                selection.startDragging(mesh)
-            } else {
-                isDraggingMesh = true
-            }
-        }
-        
-        // 3
-        if isDraggingMesh {
-            dragOffset = value.translation
-        } else {
-            processNodeTranslation(value.translation)
-        }
-    }
-    
-        // 4
-    func processDragEnd(_ value: DragGesture.Value) {
-        isDragging = false
-        dragOffset = .zero
-        
-        if isDraggingMesh {
-            portalPosition = CGPoint(
-                x: portalPosition.x + value.translation.width,
-                y: portalPosition.y + value.translation.height)
-        } else {
-            processNodeTranslation(value.translation)
-            selection.stopDragging(mesh)
-        }
-    }
-    
-        // 1
-    func scaledOffset(_ scale: CGFloat, initialValue: CGPoint) -> CGPoint {
-        let newx = initialValue.x*scale
-        let newy = initialValue.y*scale
-        return CGPoint(x: newx, y: newy)
-    }
-    
-    func clampedScale(_ scale: CGFloat, initialValue: CGFloat?) -> (scale: CGFloat, didClamp: Bool) {
-        let minScale: CGFloat = 0.1
-        let maxScale: CGFloat = 2.0
-        let raw = scale.magnitude * (initialValue ?? maxScale)
-        let value =  max(minScale, min(maxScale, raw))
-        let didClamp = raw != value
-        return (value, didClamp)
-    }
-    
-    func processScaleChange(_ value: CGFloat) {
-        let clamped = clampedScale(value, initialValue: initialZoomScale)
-        zoomScale = clamped.scale
-        if !clamped.didClamp,
-           let point = initialPortalPosition {
-            portalPosition = scaledOffset(value, initialValue: point)
-        }
-    }
-}
-
 /////////////////
-///HELPERS
+///Gestures
 /////////////////
 
 fileprivate extension SurfaceView {
@@ -191,6 +88,105 @@ fileprivate extension SurfaceView {
             }
     }
 }
+
+
+/////////////////
+///HELPERS
+/////////////////
+///
+private extension SurfaceView {
+    func distance(from pointA: CGPoint, to pointB: CGPoint) -> CGFloat {
+        let xdelta = pow(pointA.x - pointB.x, 2)
+        let ydelta = pow(pointA.y - pointB.y, 2)
+        
+        return sqrt(xdelta + ydelta)
+    }
+    
+    func hitTest(point: CGPoint, parent: CGSize) -> Node? {
+        for node in mesh.nodes {
+            let endPoint = node.position
+                .scaledFrom(zoomScale)
+                .alignCenterInParent(parent)
+                .translatedBy(x: portalPosition.x, y: portalPosition.y)
+            let dist =  distance(from: point, to: endPoint) / zoomScale
+            
+            if dist < NodeView.width / 2.0 {
+                return node
+            }
+        }
+        return nil
+    }
+    
+    func processNodeTranslation(_ translation: CGSize) {
+        guard !selection.draggingNodes.isEmpty else { return }
+        let scaledTranslation = translation.scaledDownTo(zoomScale)
+        mesh.processNodeTranslation(
+            scaledTranslation,
+            nodes: selection.draggingNodes)
+    }
+    
+    func processDragChange(_ value: DragGesture.Value, containerSize: CGSize) {
+        if !isDragging {
+            isDragging = true
+            
+            if let node = hitTest(
+                point: value.startLocation,
+                parent: containerSize) {
+                isDraggingMesh = false
+                selection.selectNode(node)
+                selection.startDragging(mesh)
+            } else {
+                isDraggingMesh = true
+            }
+        }
+        
+        if isDraggingMesh {
+            dragOffset = value.translation
+        } else {
+            processNodeTranslation(value.translation)
+        }
+    }
+    
+    func processDragEnd(_ value: DragGesture.Value) {
+        isDragging = false
+        dragOffset = .zero
+        
+        if isDraggingMesh {
+            portalPosition = CGPoint( x: portalPosition.x + value.translation.width, y: portalPosition.y + value.translation.height )
+        } else {
+            processNodeTranslation(value.translation)
+            selection.stopDragging(mesh)
+        }
+    }
+    
+    func scaledOffset(_ scale: CGFloat, initialValue: CGPoint) -> CGPoint {
+        let newx = initialValue.x*scale
+        let newy = initialValue.y*scale
+        return CGPoint(x: newx, y: newy)
+    }
+    
+    func clampedScale(_ scale: CGFloat, initialValue: CGFloat?) -> (scale: CGFloat, didClamp: Bool) {
+        let minScale: CGFloat = 0.1
+        let maxScale: CGFloat = 2.0
+        let raw = scale.magnitude * (initialValue ?? maxScale)
+        let value =  max(minScale, min(maxScale, raw))
+        let didClamp = raw != value
+        return (value, didClamp)
+    }
+    
+    func processScaleChange(_ value: CGFloat) {
+        let clamped = clampedScale(value, initialValue: initialZoomScale)
+        zoomScale = clamped.scale
+        if !clamped.didClamp,
+           let point = initialPortalPosition {
+            portalPosition = scaledOffset(value, initialValue: point)
+        }
+    }
+}
+
+/////////////////////
+/// Preview
+////////////////////
 
 struct SurfaceView_Previews: PreviewProvider {
     static var previews: some View {

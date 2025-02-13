@@ -44,6 +44,10 @@ struct EdgeView: Shape {
     }
 }
 
+/////////////////////
+/// Preview
+////////////////////
+
 struct EdgeView_Previews: PreviewProvider {
     static var previews: some View {
         let edge1 = EdgeProxy(

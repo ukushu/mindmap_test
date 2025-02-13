@@ -23,6 +23,10 @@ struct BoringListView: View {
     }
 }
 
+/////////////////////
+/// Preview
+////////////////////
+
 struct BoringListView_Previews: PreviewProvider {
     static var previews: some View {
         let mesh = Mesh.sampleMesh()

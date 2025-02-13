@@ -14,6 +14,10 @@ struct EdgeMapView: View {
     }
 }
 
+/////////////////////
+/// Preview
+////////////////////
+
 struct EdgeMapView_Previews: PreviewProvider {
     static let proxy1 = EdgeProxy(
         id: EdgeID(),

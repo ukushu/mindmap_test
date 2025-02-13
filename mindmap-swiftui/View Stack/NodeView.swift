@@ -3,11 +3,10 @@ import SwiftUI
 
 struct NodeView: View {
     static let width = CGFloat(100)
-        // 1
     @State var node: Node
-        //2
+    
     @ObservedObject var selection: SelectionHandler
-        //3
+    
     var isSelected: Bool {
         return selection.isNodeSelected(node)
     }
@@ -24,6 +23,9 @@ struct NodeView: View {
     }
 }
 
+/////////////////////
+/// Preview
+////////////////////
 struct NodeView_Previews: PreviewProvider {
     static var previews: some View {
         let selection1 = SelectionHandler()

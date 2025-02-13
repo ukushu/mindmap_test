@@ -14,6 +14,10 @@ struct MapView: View {
     }
 }
 
+/////////////////////
+/// Preview
+////////////////////
+
 struct MapView_Previews: PreviewProvider {
     static var previews: some View {
         let mesh = Mesh()
