@@ -5,7 +5,9 @@ import CoreGraphics
 extension Mesh {
     static func sampleMesh() -> Mesh {
         let mesh = Mesh()
+        
         mesh.updateNodeText(mesh.rootNode(), string: "New note 111")
+        
         [(0, "mind 1"),
          (120, "mind 2"),
          (240, "mind 3")].forEach { (angle, name) in
