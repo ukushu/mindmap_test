@@ -18,6 +18,14 @@ class SelectionHandler: ObservableObject {
         editingText = node.text
     }
     
+    func selectNodeSwitch(_ node: Node) {
+        if let idx = selectedNodeIDs.firstIndex(of: node.id) {
+            selectedNodeIDs.remove(at: idx)
+        } else {
+            selectedNodeIDs.append(node.id)
+        }
+    }
+    
     func isNodeSelected(_ node: Node) -> Bool {
         return selectedNodeIDs.contains(node.id)
     }

@@ -12,7 +12,11 @@ struct NodeMapView: View {
                 NodeView(node: node, selection: self.selection)
                     .offset(x: node.position.x, y: node.position.y)
                     .onTapGesture {
-                        self.selection.selectNode(node)
+                        if NSApp.currentEvent!.modifierFlags.contains(.shift) {
+                            self.selection.selectNodeSwitch(node)
+                        } else {
+                            self.selection.selectNode(node)
+                        }
                     }
                     .overlay {
 //                        if inEdit {

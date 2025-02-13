@@ -87,7 +87,7 @@ fileprivate extension MindMapSurfaceView {
 ///HELPERS
 /////////////////
 ///
-private extension                         MindMapSurfaceView {
+private extension MindMapSurfaceView {
     func distance(from pointA: CGPoint, to pointB: CGPoint) -> CGFloat {
         let xdelta = pow(pointA.x - pointB.x, 2)
         let ydelta = pow(pointA.y - pointB.y, 2)
@@ -107,26 +107,31 @@ private extension                         MindMapSurfaceView {
                 return node
             }
         }
+        
         return nil
     }
     
     func processNodeTranslation(_ translation: CGSize) {
         guard !model.selection.draggingNodes.isEmpty else { return }
+        
         let scaledTranslation = translation.scaledDownTo(zoomScale)
-        model.mesh.processNodeTranslation(
-            scaledTranslation,
-            nodes: model.selection.draggingNodes)
+        
+        model.mesh.processNodeTranslation( scaledTranslation, nodes: model.selection.draggingNodes)
     }
     
     func processDragChange(_ value: DragGesture.Value, containerSize: CGSize) {
         if !isDragging {
             isDragging = true
             
-            if let node = hitTest(
-                point: value.startLocation,
-                parent: containerSize) {
+            if let node = hitTest(point: value.startLocation, parent: containerSize) {
                 isDraggingMesh = false
-                model.selection.selectNode(node)
+                
+                if model.selection.selectedNodeIDs.contains(node.id) {
+                    
+                } else {
+                    model.selection.selectNode(node)
+                }
+                
                 model.selection.startDragging(model.mesh)
             } else {
                 isDraggingMesh = true
