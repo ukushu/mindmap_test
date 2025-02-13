@@ -1,7 +1,8 @@
+
 import SwiftUI
 
 @main
-struct mindmap_swiftuiApp: App {
+struct MindMap_testApp: App {
     var body: some Scene {
         WindowGroup {
             MindMapListView()

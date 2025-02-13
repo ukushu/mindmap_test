@@ -4,6 +4,7 @@ import SwiftUI
 struct NodeMapView: View {
     @ObservedObject var selection: SelectionHandler
     @Binding var nodes: [Node]
+    @State var inEdit: Bool = false
     
     var body: some View {
         ZStack {
@@ -12,6 +13,17 @@ struct NodeMapView: View {
                     .offset(x: node.position.x, y: node.position.y)
                     .onTapGesture {
                         self.selection.selectNode(node)
+                    }
+                    .overlay {
+//                        if inEdit {
+//                            
+//                            TextField("Type the text of new mind…", text: $model.selection.editingText, onCommit: {
+//                                if let node = model.selection.onlySelectedNode(in: model.mesh) {
+//                                    model.mesh.updateNodeText(node, string: self.model.selection.editingText)
+//                                }
+//                            })
+//                            .textFieldStyle(.roundedBorder)
+//                        }
                     }
             }
         }

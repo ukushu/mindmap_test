@@ -1,9 +1,9 @@
 
 import SwiftUI
 
+
 struct MindMapSurfaceView: View {
-    @ObservedObject var mesh: Mesh
-    @ObservedObject var selection: SelectionHandler
+    @ObservedObject var model: MindMapItem
     
     //dragging
     @State var portalPosition: CGPoint = .zero
@@ -18,13 +18,6 @@ struct MindMapSurfaceView: View {
     
     var body: some View {
         VStack {
-            TextField("Type the text of new mind…", text: $selection.editingText, onCommit: {
-                if let node = self.selection.onlySelectedNode(in: self.mesh) {
-                    self.mesh.updateNodeText(node, string: self.self.selection.editingText)
-                }
-            })
-            .textFieldStyle(.roundedBorder)
-            
             TopMenu()
             
             Container()
@@ -34,7 +27,7 @@ struct MindMapSurfaceView: View {
     func TopMenu() -> some View {
         HStack {
             Button("Add node") {
-                mesh.addNode(Node.init(id: NodeID.init(uuidString: UUID().uuidString)!, position: CGPoint.init(x: 20, y: 40), text: "Bla"))
+                model.mesh.addNode(Node.init(id: NodeID.init(uuidString: UUID().uuidString)!, position: CGPoint.init(x: 20, y: 40), text: "Bla"))
             }
         }
     }
@@ -44,7 +37,7 @@ struct MindMapSurfaceView: View {
             ZStack {
                 Rectangle().fill(Color.red)
                 
-                MapView(selection: self.selection, mesh: self.mesh)
+                MapView(selection: model.selection, mesh: model.mesh)
                     .scaleEffect(self.zoomScale)
                     .offset(
                         x: self.portalPosition.x + self.dragOffset.width,
@@ -61,7 +54,7 @@ struct MindMapSurfaceView: View {
 ///Gestures
 /////////////////
 
-fileprivate extension                         MindMapSurfaceView {
+fileprivate extension MindMapSurfaceView {
     func myDragGesture(geometry: GeometryProxy) -> _EndedGesture<_ChangedGesture<DragGesture>> {
         DragGesture()
             .onChanged { value in
@@ -103,7 +96,7 @@ private extension                         MindMapSurfaceView {
     }
     
     func hitTest(point: CGPoint, parent: CGSize) -> Node? {
-        for node in mesh.nodes {
+        for node in model.mesh.nodes {
             let endPoint = node.position
                 .scaledFrom(zoomScale)
                 .alignCenterInParent(parent)
@@ -118,11 +111,11 @@ private extension                         MindMapSurfaceView {
     }
     
     func processNodeTranslation(_ translation: CGSize) {
-        guard !selection.draggingNodes.isEmpty else { return }
+        guard !model.selection.draggingNodes.isEmpty else { return }
         let scaledTranslation = translation.scaledDownTo(zoomScale)
-        mesh.processNodeTranslation(
+        model.mesh.processNodeTranslation(
             scaledTranslation,
-            nodes: selection.draggingNodes)
+            nodes: model.selection.draggingNodes)
     }
     
     func processDragChange(_ value: DragGesture.Value, containerSize: CGSize) {
@@ -133,8 +126,8 @@ private extension                         MindMapSurfaceView {
                 point: value.startLocation,
                 parent: containerSize) {
                 isDraggingMesh = false
-                selection.selectNode(node)
-                selection.startDragging(mesh)
+                model.selection.selectNode(node)
+                model.selection.startDragging(model.mesh)
             } else {
                 isDraggingMesh = true
             }
@@ -155,7 +148,7 @@ private extension                         MindMapSurfaceView {
             portalPosition = CGPoint( x: portalPosition.x + value.translation.width, y: portalPosition.y + value.translation.height )
         } else {
             processNodeTranslation(value.translation)
-            selection.stopDragging(mesh)
+            model.selection.stopDragging(model.mesh)
         }
     }
     
@@ -190,8 +183,8 @@ private extension                         MindMapSurfaceView {
 
 struct SurfaceView_Previews: PreviewProvider {
     static var previews: some View {
-        let mesh = Mesh.sampleMesh()
-        let selection = SelectionHandler()
-        return MindMapSurfaceView(mesh: mesh, selection: selection)
+        let model = MindMapItem(mesh: Mesh.sampleMesh(), selection: SelectionHandler())
+        
+        return MindMapSurfaceView(model: model)
     }
 }
