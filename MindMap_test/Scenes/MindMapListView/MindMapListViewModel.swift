@@ -32,12 +32,14 @@ class MindMapListViewModel: ObservableObject {
 class MindMapItem: ObservableObject, Identifiable, Equatable {
     @Published var mesh: Mesh
     @Published var selection: SelectionHandler
+    @Published var name: String
     
     var id: String { mesh.rootNodeID.uuidString }
     
     init(mesh: Mesh = .sampleMesh(), selection: SelectionHandler = .init()) {
         self.mesh = mesh
         self.selection = selection
+        self.name = "Mind Map 1"
     }
     
     static func == (lhs: MindMapItem, rhs: MindMapItem) -> Bool {

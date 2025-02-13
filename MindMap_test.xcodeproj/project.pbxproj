@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		1D13F4612D5EB3320098C8BC /* MoreSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 1D13F4602D5EB3320098C8BC /* MoreSwiftUI */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		1D13F3B92D5E97290098C8BC /* MindMap_test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MindMap_test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1D13F4612D5EB3320098C8BC /* MoreSwiftUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +70,7 @@
 			);
 			name = MindMap_test;
 			packageProductDependencies = (
+				1D13F4602D5EB3320098C8BC /* MoreSwiftUI */,
 			);
 			productName = MindMap_test;
 			productReference = 1D13F3B92D5E97290098C8BC /* MindMap_test.app */;
@@ -94,6 +100,9 @@
 			);
 			mainGroup = 1D13F3B02D5E97290098C8BC;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				1D13F45F2D5EB3320098C8BC /* XCRemoteSwiftPackageReference "moreswiftui" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 1D13F3BA2D5E97290098C8BC /* Products */;
 			projectDirPath = "";
@@ -319,6 +328,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		1D13F45F2D5EB3320098C8BC /* XCRemoteSwiftPackageReference "moreswiftui" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://gitlab.com/UKS/moreswiftui.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1D13F4602D5EB3320098C8BC /* MoreSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1D13F45F2D5EB3320098C8BC /* XCRemoteSwiftPackageReference "moreswiftui" */;
+			productName = MoreSwiftUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 1D13F3B12D5E97290098C8BC /* Project object */;
 }

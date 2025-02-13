@@ -1,5 +1,6 @@
 
 import SwiftUI
+import MoreSwiftUI
 
 struct MindMapListView: View {
     @StateObject var model: MindMapListViewModel = MindMapListViewModel()
@@ -10,6 +11,7 @@ struct MindMapListView: View {
                 MindMapSurfaceView( model: model.mMaps[selectedIdx] )
             } else {
                 Text("Create your first MindMap")
+                    .fillParent()
             }
             
             TabsPanel()
@@ -20,28 +22,38 @@ struct MindMapListView: View {
         VStack {
             Spacer()
             
-            HStack {
-                ForEach(model.mMaps) { item in
-                    if let idx = model.mMaps.firstIndex(where: { $0 == item }) {
-                        Button(item.mesh.rootNode().text) {
-                            model.seleted = idx
-                        }
-                        .contextMenu{
-                            Button("Delete") {
-                                model.delete(idx)
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack {
+                    ForEach(model.mMaps) { item in
+                        if let idx = model.mMaps.firstIndex(where: { $0 == item }) {
+                            Button(item.name) {
+                                model.seleted = idx
+                            }
+                            .background {
+                                RoundedRectangle(cornerRadius: 3)
+                                    .fill( model.seleted == idx ? Color.gray : Color.clear )
+                            }
+                            .contextMenu {
+                                Button("Delete") {
+                                    withAnimation {
+                                        model.delete(idx)
+                                    }
+                                }
                             }
                         }
                     }
+                    
+                    Button("+") {
+                        withAnimation {
+                            model.add()
+                        }
+                    }
+                    
+                    Spacer()
                 }
-                
-                Button("+") {
-                    model.add()
-                }
-                
-                Spacer()
             }
             .padding(EdgeInsets(top: 4, leading: 5, bottom: 4, trailing: 5))
-            .background(Color.gray)
+            .background( WindowRealBackgroundView() )
         }
     }
 }
