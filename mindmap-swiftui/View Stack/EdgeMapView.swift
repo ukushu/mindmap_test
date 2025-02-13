@@ -23,6 +23,7 @@ struct EdgeMapView_Previews: PreviewProvider {
         id: EdgeID(),
         start: .zero,
         end: CGPoint(x: -100, y: 30))
+    
     static let proxy2 = EdgeProxy(
         id: EdgeID(),
         start: .zero,

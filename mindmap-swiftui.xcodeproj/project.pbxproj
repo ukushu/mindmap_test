@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D13F3AD2D5E25960098C8BC /* MindMapListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D13F3AC2D5E25910098C8BC /* MindMapListViewModel.swift */; };
 		AB4577E12740972E00E7F889 /* mindmap_swiftuiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4577E02740972E00E7F889 /* mindmap_swiftuiApp.swift */; };
 		AB4577E52740973200E7F889 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB4577E42740973200E7F889 /* Assets.xcassets */; };
 		AB4577E82740973200E7F889 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB4577E72740973200E7F889 /* Preview Assets.xcassets */; };
@@ -23,11 +24,11 @@
 		AB45782127412FBE00E7F889 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB45781427412FBE00E7F889 /* MapView.swift */; };
 		AB45782227412FBE00E7F889 /* EdgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB45781527412FBE00E7F889 /* EdgeView.swift */; };
 		AB45782327412FBE00E7F889 /* NodeMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB45781627412FBE00E7F889 /* NodeMapView.swift */; };
-		AB45782427412FBE00E7F889 /* SurfaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB45781727412FBE00E7F889 /* SurfaceView.swift */; };
+		AB45782427412FBE00E7F889 /* MindMapSurfaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB45781727412FBE00E7F889 /* MindMapSurfaceView.swift */; };
 		AB45782527412FBE00E7F889 /* NodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB45781827412FBE00E7F889 /* NodeView.swift */; };
 		AB45782627412FBE00E7F889 /* BoringListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB45781927412FBE00E7F889 /* BoringListView.swift */; };
 		AB4578292741303200E7F889 /* CGPoint+Help.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4578282741303200E7F889 /* CGPoint+Help.swift */; };
-		AB4DCB5B2741A078000AB777 /* FilesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4DCB5A2741A078000AB777 /* FilesListView.swift */; };
+		AB4DCB5B2741A078000AB777 /* MindMapListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4DCB5A2741A078000AB777 /* MindMapListView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1D13F3AC2D5E25910098C8BC /* MindMapListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MindMapListViewModel.swift; sourceTree = "<group>"; };
 		AB4577DD2740972E00E7F889 /* mindmap-swiftui.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "mindmap-swiftui.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB4577E02740972E00E7F889 /* mindmap_swiftuiApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mindmap_swiftuiApp.swift; sourceTree = "<group>"; };
 		AB4577E42740973200E7F889 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -68,11 +70,11 @@
 		AB45781427412FBE00E7F889 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		AB45781527412FBE00E7F889 /* EdgeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EdgeView.swift; sourceTree = "<group>"; };
 		AB45781627412FBE00E7F889 /* NodeMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeMapView.swift; sourceTree = "<group>"; };
-		AB45781727412FBE00E7F889 /* SurfaceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SurfaceView.swift; sourceTree = "<group>"; };
+		AB45781727412FBE00E7F889 /* MindMapSurfaceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MindMapSurfaceView.swift; sourceTree = "<group>"; };
 		AB45781827412FBE00E7F889 /* NodeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeView.swift; sourceTree = "<group>"; };
 		AB45781927412FBE00E7F889 /* BoringListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoringListView.swift; sourceTree = "<group>"; };
 		AB4578282741303200E7F889 /* CGPoint+Help.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPoint+Help.swift"; sourceTree = "<group>"; };
-		AB4DCB5A2741A078000AB777 /* FilesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesListView.swift; sourceTree = "<group>"; };
+		AB4DCB5A2741A078000AB777 /* MindMapListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MindMapListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +102,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1D13F3AB2D5E25560098C8BC /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				1D13F3AE2D5E25A10098C8BC /* MindMapListView */,
+				1D13F3AF2D5E26950098C8BC /* MindMapSurfaceView */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		1D13F3AE2D5E25A10098C8BC /* MindMapListView */ = {
+			isa = PBXGroup;
+			children = (
+				AB4DCB5A2741A078000AB777 /* MindMapListView.swift */,
+				1D13F3AC2D5E25910098C8BC /* MindMapListViewModel.swift */,
+			);
+			path = MindMapListView;
+			sourceTree = "<group>";
+		};
+		1D13F3AF2D5E26950098C8BC /* MindMapSurfaceView */ = {
+			isa = PBXGroup;
+			children = (
+				AB45781727412FBE00E7F889 /* MindMapSurfaceView.swift */,
+			);
+			path = MindMapSurfaceView;
+			sourceTree = "<group>";
+		};
 		AB4577D42740972E00E7F889 = {
 			isa = PBXGroup;
 			children = (
@@ -125,8 +153,8 @@
 			children = (
 				AB45780A27412F6D00E7F889 /* Info.plist */,
 				AB4577E02740972E00E7F889 /* mindmap_swiftuiApp.swift */,
-				AB4DCB5A2741A078000AB777 /* FilesListView.swift */,
 				AB4577E42740973200E7F889 /* Assets.xcassets */,
+				1D13F3AB2D5E25560098C8BC /* Scenes */,
 				AB4578272741303200E7F889 /* Help */,
 				AB45780B27412FBE00E7F889 /* Model */,
 				AB45781227412FBE00E7F889 /* View Stack */,
@@ -180,7 +208,6 @@
 				AB45781427412FBE00E7F889 /* MapView.swift */,
 				AB45781527412FBE00E7F889 /* EdgeView.swift */,
 				AB45781627412FBE00E7F889 /* NodeMapView.swift */,
-				AB45781727412FBE00E7F889 /* SurfaceView.swift */,
 				AB45781827412FBE00E7F889 /* NodeView.swift */,
 				AB45781927412FBE00E7F889 /* BoringListView.swift */,
 			);
@@ -328,12 +355,13 @@
 				AB45781A27412FBE00E7F889 /* Mesh.swift in Sources */,
 				AB45782227412FBE00E7F889 /* EdgeView.swift in Sources */,
 				AB4578292741303200E7F889 /* CGPoint+Help.swift in Sources */,
-				AB45782427412FBE00E7F889 /* SurfaceView.swift in Sources */,
+				1D13F3AD2D5E25960098C8BC /* MindMapListViewModel.swift in Sources */,
+				AB45782427412FBE00E7F889 /* MindMapSurfaceView.swift in Sources */,
 				AB45782027412FBE00E7F889 /* EdgeMapView.swift in Sources */,
 				AB45781F27412FBE00E7F889 /* Mesh+MathHelp.swift in Sources */,
 				AB45781B27412FBE00E7F889 /* SelectionHandler.swift in Sources */,
 				AB45781D27412FBE00E7F889 /* Mesh+Demo.swift in Sources */,
-				AB4DCB5B2741A078000AB777 /* FilesListView.swift in Sources */,
+				AB4DCB5B2741A078000AB777 /* MindMapListView.swift in Sources */,
 				AB45781C27412FBE00E7F889 /* Edge.swift in Sources */,
 				AB45782127412FBE00E7F889 /* MapView.swift in Sources */,
 				AB45782627412FBE00E7F889 /* BoringListView.swift in Sources */,

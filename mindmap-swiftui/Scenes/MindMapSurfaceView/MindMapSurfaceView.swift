@@ -1,7 +1,7 @@
 
 import SwiftUI
 
-struct SurfaceView: View {
+struct MindMapSurfaceView: View {
     @ObservedObject var mesh: Mesh
     @ObservedObject var selection: SelectionHandler
     
@@ -61,7 +61,7 @@ struct SurfaceView: View {
 ///Gestures
 /////////////////
 
-fileprivate extension SurfaceView {
+fileprivate extension                         MindMapSurfaceView {
     func myDragGesture(geometry: GeometryProxy) -> _EndedGesture<_ChangedGesture<DragGesture>> {
         DragGesture()
             .onChanged { value in
@@ -94,7 +94,7 @@ fileprivate extension SurfaceView {
 ///HELPERS
 /////////////////
 ///
-private extension SurfaceView {
+private extension                         MindMapSurfaceView {
     func distance(from pointA: CGPoint, to pointB: CGPoint) -> CGFloat {
         let xdelta = pow(pointA.x - pointB.x, 2)
         let ydelta = pow(pointA.y - pointB.y, 2)
@@ -192,6 +192,6 @@ struct SurfaceView_Previews: PreviewProvider {
     static var previews: some View {
         let mesh = Mesh.sampleMesh()
         let selection = SelectionHandler()
-        return SurfaceView(mesh: mesh, selection: selection)
+        return MindMapSurfaceView(mesh: mesh, selection: selection)
     }
 }

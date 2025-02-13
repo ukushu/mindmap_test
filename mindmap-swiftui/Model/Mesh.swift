@@ -11,6 +11,8 @@ class Mesh: ObservableObject, Identifiable {
     @Published var nodes: [Node] = []
     @Published var editingText: String
     
+    @Published var links: [EdgeProxy] = []
+    
     init() {
         self.editingText = ""
         let root = Node(text: "root")
@@ -23,9 +25,6 @@ class Mesh: ObservableObject, Identifiable {
             rebuildLinks()
         }
     }
-    @Published var links: [EdgeProxy] = []
-    
-    
     
     func rebuildLinks() {
         links = edges.compactMap { edge in
@@ -42,6 +41,7 @@ class Mesh: ObservableObject, Identifiable {
         guard let root = nodes.filter({ $0.id == rootNodeID }).first else {
             fatalError("mesh is invalid - no root")
         }
+        
         return root
     }
     
