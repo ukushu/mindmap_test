@@ -23,61 +23,44 @@ struct SurfaceView: View {
                     self.mesh.updateNodeText(node, string: self.self.selection.editingText)
                 }
             })
-                
-                .textFieldStyle(.roundedBorder)
+            .textFieldStyle(.roundedBorder)
+            
+            TopMenu()
+            
+            Container()
+        }
+    }
+    
+    func TopMenu() -> some View {
+        HStack {
             Button("Add node") {
                 mesh.addNode(Node.init(id: NodeID.init(uuidString: UUID().uuidString)!, position: CGPoint.init(x: 20, y: 40), text: "Bla"))
             }
-                // 2
-            GeometryReader { geometry in
-                    // 3
-                ZStack {
-                    Rectangle().fill(Color.red)
-                    MapView(selection: self.selection, mesh: self.mesh)
-                        .scaleEffect(self.zoomScale)
-                        // 4
-                        .offset(
-                            x: self.portalPosition.x + self.dragOffset.width,
-                            y: self.portalPosition.y + self.dragOffset.height)
-                        .animation(.easeIn)
-                }
-                .gesture(DragGesture()
-                            .onChanged { value in
-                    self.processDragChange(value, containerSize: geometry.size)
-                }
-                            .onEnded { value in
-                    self.processDragEnd(value)
-                })
-                .gesture(MagnificationGesture()
-                            .onChanged { value in
-                        // 1
-                    if self.initialZoomScale == nil {
-                        self.initialZoomScale = self.zoomScale
-                        self.initialPortalPosition = self.portalPosition
-                    }
-                    self.processScaleChange(value)
-                }
-                            .onEnded { value in
-                        // 2
-                    self.processScaleChange(value)
-                    self.initialZoomScale = nil
-                    self.initialPortalPosition  = nil
-                })
+        }
+    }
+    
+    func Container() -> some View {
+        GeometryReader { geometry in
+            ZStack {
+                Rectangle().fill(Color.red)
+                
+                MapView(selection: self.selection, mesh: self.mesh)
+                    .scaleEffect(self.zoomScale)
+                    .offset(
+                        x: self.portalPosition.x + self.dragOffset.width,
+                        y: self.portalPosition.y + self.dragOffset.height)
+                    .animation(.easeIn, value: portalPosition)
             }
+            .gesture( myDragGesture(geometry: geometry) )
+            .gesture( myNagnificationGesture(geometry: geometry) )
         }
     }
 }
 
-struct SurfaceView_Previews: PreviewProvider {
-    static var previews: some View {
-        let mesh = Mesh.sampleMesh()
-        let selection = SelectionHandler()
-        return SurfaceView(mesh: mesh, selection: selection)
-    }
-}
+
 
 private extension SurfaceView {
-        // 1
+    // 1
     func distance(from pointA: CGPoint, to pointB: CGPoint) -> CGFloat {
         let xdelta = pow(pointA.x - pointB.x, 2)
         let ydelta = pow(pointA.y - pointB.y, 2)
@@ -85,7 +68,7 @@ private extension SurfaceView {
         return sqrt(xdelta + ydelta)
     }
     
-        // 2
+    // 2
     func hitTest(point: CGPoint, parent: CGSize) -> Node? {
         for node in mesh.nodes {
             let endPoint = node.position
@@ -94,7 +77,7 @@ private extension SurfaceView {
                 .translatedBy(x: portalPosition.x, y: portalPosition.y)
             let dist =  distance(from: point, to: endPoint) / zoomScale
             
-                //3
+            //3
             if dist < NodeView.width / 2.0 {
                 return node
             }
@@ -102,7 +85,7 @@ private extension SurfaceView {
         return nil
     }
     
-        // 4
+    // 4
     func processNodeTranslation(_ translation: CGSize) {
         guard !selection.draggingNodes.isEmpty else { return }
         let scaledTranslation = translation.scaledDownTo(zoomScale)
@@ -112,7 +95,7 @@ private extension SurfaceView {
     }
     
     func processDragChange(_ value: DragGesture.Value, containerSize: CGSize) {
-            // 1
+        // 1
         if !isDragging {
             isDragging = true
             
@@ -121,14 +104,14 @@ private extension SurfaceView {
                 parent: containerSize) {
                 isDraggingMesh = false
                 selection.selectNode(node)
-                    // 2
+                // 2
                 selection.startDragging(mesh)
             } else {
                 isDraggingMesh = true
             }
         }
         
-            // 3
+        // 3
         if isDraggingMesh {
             dragOffset = value.translation
         } else {
@@ -174,5 +157,45 @@ private extension SurfaceView {
            let point = initialPortalPosition {
             portalPosition = scaledOffset(value, initialValue: point)
         }
+    }
+}
+
+/////////////////
+///HELPERS
+/////////////////
+
+fileprivate extension SurfaceView {
+    func myDragGesture(geometry: GeometryProxy) -> _EndedGesture<_ChangedGesture<DragGesture>> {
+        DragGesture()
+            .onChanged { value in
+                self.processDragChange(value, containerSize: geometry.size)
+            }
+            .onEnded { value in
+                self.processDragEnd(value)
+            }
+    }
+    
+    func myNagnificationGesture(geometry: GeometryProxy) -> _EndedGesture<_ChangedGesture<MagnificationGesture>> {
+        MagnificationGesture()
+            .onChanged { value in
+                if self.initialZoomScale == nil {
+                    self.initialZoomScale = self.zoomScale
+                    self.initialPortalPosition = self.portalPosition
+                }
+                self.processScaleChange(value)
+            }
+            .onEnded { value in
+                self.processScaleChange(value)
+                self.initialZoomScale = nil
+                self.initialPortalPosition  = nil
+            }
+    }
+}
+
+struct SurfaceView_Previews: PreviewProvider {
+    static var previews: some View {
+        let mesh = Mesh.sampleMesh()
+        let selection = SelectionHandler()
+        return SurfaceView(mesh: mesh, selection: selection)
     }
 }

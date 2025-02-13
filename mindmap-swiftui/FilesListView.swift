@@ -38,7 +38,8 @@ struct FilesListView: View {
     var body: some View {
         NavigationView {
             VStack {
-                Trailing
+                TopMenu
+                
                 List(list.files) { item in
                     NavigationLink(item.mesh.rootNode().text) {
                         SurfaceView(mesh: item.mesh, selection: item.selection)
@@ -50,10 +51,10 @@ struct FilesListView: View {
         }
         .navigationTitle("Mindmap")
         .navigationViewStyle(.stack)
-        .navigationBarItems(trailing: Trailing)
+        .navigationBarItems(trailing: TopMenu)
     }
     
-    var Trailing: some View {
+    var TopMenu: some View {
         Button("Add note") {
             list.addNote()
         }

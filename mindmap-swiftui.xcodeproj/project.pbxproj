@@ -501,7 +501,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"mindmap-swiftui/Preview Content\"";
-				DEVELOPMENT_TEAM = BA663759J3;
+				DEVELOPMENT_TEAM = RPH4S2457V;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "mindmap-swiftui/Info.plist";
@@ -531,7 +531,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"mindmap-swiftui/Preview Content\"";
-				DEVELOPMENT_TEAM = BA663759J3;
+				DEVELOPMENT_TEAM = RPH4S2457V;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "mindmap-swiftui/Info.plist";
