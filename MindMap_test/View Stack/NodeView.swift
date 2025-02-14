@@ -3,25 +3,50 @@ import SwiftUI
 
 struct NodeView: View {
     static let width = CGFloat(100)
+    
     @State var node: Node
     
     @ObservedObject var selection: SelectionHandler
     
     var isSelected: Bool {
-        return selection.isNodeSelected(node)
+        return selection.checkIsSelected(node)
     }
     
     var body: some View {
-        RoundedRectangle(cornerRadius: 20)
-            .fill(Color.yellow)
-            .overlay(RoundedRectangle(cornerRadius: 20)
-                        .stroke(isSelected ? Color.red : Color.black, lineWidth: isSelected ? 5 : 3))
-            .overlay(Text(node.text)
-                        .multilineTextAlignment(.center)
-                        .padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8)))
-            .frame(width: NodeView.width, height: NodeView.width, alignment: .center)
+        ZStack {
+            SelectedView(isSelected)
+                .frame(width: NodeView.width + 12, height: NodeView.width + 12, alignment: .center)
+            
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color.yellow)
+                .overlay( RoundedRectangle(cornerRadius: 20).stroke(Color.black, lineWidth: 3) )
+                .overlay(Text(node.text)
+                    .multilineTextAlignment(.center)
+                    .padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8)))
+                .frame(width: NodeView.width, height: NodeView.width, alignment: .center)
+        }
+    }
+    
+    @ViewBuilder
+    func SelectedView(_ sel: Bool) -> some View {
+        if sel {
+            ZStack{
+                RoundedRectangle(cornerRadius: 25)
+                    .stroke(Color.blue.opacity(1), lineWidth: 1)
+                
+                RoundedRectangle(cornerRadius: 25)
+                    .stroke(Color.blue, lineWidth: 2)
+                    .blur(radius: 3)
+            }
+        } else {
+            EmptyView()
+        }
     }
 }
+
+/////////////////////
+/// Helpers
+////////////////////
 
 /////////////////////
 /// Preview

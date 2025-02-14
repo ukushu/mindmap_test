@@ -35,7 +35,7 @@ struct TabsPanelView: View {
 extension TabsPanelView {
     func MMapTabDraggable(model: MMEditorViewModel, item: MindMapItem) -> some View {
         MMapTab(model: model, item: item)
-            .overlay(dragging?.id == item.id ? Color.white.opacity(0.8) : Color.clear)
+            .overlay(dragging?.id == item.id ? Color.white.opacity(0.4) : Color.clear)
             .onDrag {
                 self.dragging = item
                 return NSItemProvider(object: String(item.id) as NSString)

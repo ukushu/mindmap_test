@@ -1,6 +1,7 @@
 
 import Foundation
 import CoreGraphics
+import SwiftUI
 
 struct DragInfo {
     var id: NodeID
@@ -12,6 +13,11 @@ class SelectionHandler: ObservableObject {
     @Published private(set) var selectedNodeIDs: [NodeID] = []
     
     @Published var editingText: String = ""
+    
+    func selectClear() {
+        selectedNodeIDs = []
+        editingText = ""
+    }
     
     func selectNode(_ node: Node) {
         selectedNodeIDs = [node.id]
@@ -26,7 +32,7 @@ class SelectionHandler: ObservableObject {
         }
     }
     
-    func isNodeSelected(_ node: Node) -> Bool {
+    func checkIsSelected(_ node: Node) -> Bool {
         return selectedNodeIDs.contains(node.id)
     }
     

@@ -27,7 +27,7 @@ struct MindMapSurfaceView: View {
     func TopMenu() -> some View {
         HStack {
             Button("Add node") {
-                model.mesh.addNode(Node.init(id: NodeID.init(uuidString: UUID().uuidString)!, position: CGPoint.init(x: 20, y: 40), text: "Bla"))
+                model.mesh.addNode(Node.init(id: NodeID(), position: CGPoint.init(x: 20, y: 40), text: "Bla"))
             }
         }
     }

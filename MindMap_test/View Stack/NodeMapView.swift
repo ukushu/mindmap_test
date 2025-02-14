@@ -8,6 +8,11 @@ struct NodeMapView: View {
     
     var body: some View {
         ZStack {
+            Color.clickableAlpha
+                .onTapGesture {
+                    self.selection.selectClear()
+                }
+            
             ForEach(nodes, id: \.visualID) { node in
                 NodeView(node: node, selection: self.selection)
                     .offset(x: node.position.x, y: node.position.y)

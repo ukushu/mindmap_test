@@ -9,7 +9,7 @@ class MMEditorViewModel: ObservableObject {
     @Published var seleted: Int? = 0 // = nil
     
     func add() {
-        mMaps.append(MindMapItem.init(mesh: Mesh.sampleMesh(), selection: SelectionHandler.init()))
+        mMaps.append( MindMapItem(mesh: Mesh.sampleMesh(), selection: SelectionHandler(), name: "Target \(mMaps.count + 1)") )
         
         if seleted == nil {
             seleted = 0
@@ -40,10 +40,10 @@ class MindMapItem: ObservableObject, Identifiable, Equatable {
     
     var id: String { mesh.rootNodeID.uuidString }
     
-    init(mesh: Mesh = .sampleMesh(), selection: SelectionHandler = .init()) {
+    init(mesh: Mesh = .sampleMesh(), selection: SelectionHandler = .init(), name: String = "Mind Map 1") {
         self.mesh = mesh
         self.selection = selection
-        self.name = "Mind Map 1"
+        self.name = name
     }
     
     init(_ item: MindMapItem) {

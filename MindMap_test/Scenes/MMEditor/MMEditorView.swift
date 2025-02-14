@@ -18,13 +18,19 @@ struct MMEditorView: View {
         if let selectedIdx = model.seleted, selectedIdx <= model.mMaps.count {
             MindMapSurfaceView( model: model.mMaps[selectedIdx] )
         } else {
-            Text("Create your first MindMap using button\nlocated at bottom left corner")
-                .foregroundStyle(Color.black)
-                .fillParent()
-                .background(
-                    MMColors.mapBg
-                )
-                .multilineTextAlignment(.center)
+            VStack {
+                Spacer()
+                
+                HStack {
+                    Text("Create your first MindMap using \"+\"")
+                        .foregroundStyle(Color.black)
+                        .multilineTextAlignment(.center)
+                        .padding(15)
+                    
+                    Spacer()
+                }
+            }
+            .background( MMColors.mapBg )
         }
     }
 }
