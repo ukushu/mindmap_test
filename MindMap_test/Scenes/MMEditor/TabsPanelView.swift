@@ -35,7 +35,6 @@ struct TabsPanelView: View {
 extension TabsPanelView {
     func MMapTabDraggable(model: MMEditorViewModel, item: MindMapItem) -> some View {
         MMapTab(model: model, item: item)
-            .overlay(dragging?.id == item.id ? Color.white.opacity(0.4) : Color.clear)
             .onDrag {
                 self.dragging = item
                 return NSItemProvider(object: String(item.id) as NSString)
@@ -94,7 +93,7 @@ fileprivate struct MMapTab: View {
                     .padding(EdgeInsets(horizontal: 9, vertical: 3))
                     .background {
                         Rectangle()
-                            .fill(model.seleted == idx ? Color.gray : Color.gray.opacity(0.2) )
+                            .fill(model.seleted == idx ? Color.gray : Color.gray.opacity(0.3) )
                             .clipShape( .rect(topLeadingRadius: 0, bottomLeadingRadius: 7, bottomTrailingRadius: 7, topTrailingRadius: 0 ) )
                     }
                     .onTapGesture(count: 1) {
