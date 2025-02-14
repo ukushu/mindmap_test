@@ -93,11 +93,11 @@ fileprivate struct MMapTab: View {
                     .padding(EdgeInsets(horizontal: 9, vertical: 3))
                     .background {
                         Rectangle()
-                            .fill(model.seleted == idx ? Color.gray : Color.gray.opacity(0.3) )
+                            .fill(model.selectedIdx == idx ? Color.gray : Color.gray.opacity(0.3) )
                             .clipShape( .rect(topLeadingRadius: 0, bottomLeadingRadius: 7, bottomTrailingRadius: 7, topTrailingRadius: 0 ) )
                     }
                     .onTapGesture(count: 1) {
-                        model.seleted = idx
+                        model.selected = model.mMaps[idx]
                     }
             }
         }

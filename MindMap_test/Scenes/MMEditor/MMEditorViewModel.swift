@@ -6,13 +6,17 @@ class MMEditorViewModel: ObservableObject {
         MindMapItem.init(mesh: Mesh.sampleMesh(), selection: SelectionHandler.init())
     ]
     
-    @Published var seleted: Int? = 0 // = nil
+    @Published var selected: MindMapItem? // = nil
+    var selectedIdx: Int? {
+        guard let selected else { return nil }
+        return mMaps.firstIndex(of: selected)
+    }
     
     func add() {
         mMaps.append( MindMapItem(mesh: Mesh.sampleMesh(), selection: SelectionHandler(), name: "Target \(mMaps.count + 1)") )
         
-        if seleted == nil {
-            seleted = 0
+        if selected == nil {
+            selected = mMaps.first
         }
     }
     
@@ -20,12 +24,16 @@ class MMEditorViewModel: ObservableObject {
         guard idx >= 0 else { return }
         
         if mMaps.count == 1 {
-            seleted = nil
-            mMaps.remove(at: 0)
+            selected = nil
         } else if idx < mMaps.count, idx - 1 >= 0 {
-            seleted = idx - 1
-            mMaps.remove(at: idx)
+            if idx == selectedIdx {
+                if idx > 0 {
+                    self.selected = mMaps[selectedIdx! - 1]
+                }
+            }
         }
+            
+        mMaps.remove(at: idx)
     }
     
     func duplicate(_ idx: Int) {

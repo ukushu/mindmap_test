@@ -18,16 +18,15 @@ struct MMEditorView: View {
     @ViewBuilder
     func TopMenuBar() -> some View {
         HStack(spacing: 10) {
-            if let selectedIdx = model.seleted, selectedIdx <= model.mMaps.count {
+            if let selected = model.selected {
                 Button("+") {
-                    model.mMaps[selectedIdx].addNode("Bla")
+                    selected.addNode("Bla")
                 }
                 
                 Button("-") {
-                    if model.mMaps[selectedIdx].selection.selectedNodeIDs.count > 0 {
-                        model.mMaps[selectedIdx].removeSelectedNodes()
-                    }
+                    selected.removeSelectedNodes()
                 }
+                .disabled(selected.selection.selectedNodeIDs.count == 0)
             }
             
             Spacer()
@@ -38,8 +37,8 @@ struct MMEditorView: View {
     
     @ViewBuilder
     func EditorCanvas() -> some View {
-        if let selectedIdx = model.seleted, selectedIdx <= model.mMaps.count {
-            MindMapSurfaceView( model: model.mMaps[selectedIdx] )
+        if let selected = model.selected {
+            MindMapSurfaceView( model: selected )
         } else {
             VStack {
                 Spacer()
