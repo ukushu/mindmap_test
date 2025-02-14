@@ -25,22 +25,7 @@ struct MindMapListView: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
                     ForEach(model.mMaps) { item in
-                        if let idx = model.mMaps.firstIndex(where: { $0 == item }) {
-                            Button(item.name) {
-                                model.seleted = idx
-                            }
-                            .background {
-                                RoundedRectangle(cornerRadius: 3)
-                                    .fill( model.seleted == idx ? Color.gray : Color.clear )
-                            }
-                            .contextMenu {
-                                Button("Delete") {
-                                    withAnimation {
-                                        model.delete(idx)
-                                    }
-                                }
-                            }
-                        }
+                        MMapTab(model: model, item: item)
                     }
                     
                     Button("+") {
@@ -57,6 +42,58 @@ struct MindMapListView: View {
         }
     }
 }
+
+struct MMapTab: View {
+    @ObservedObject var model: MindMapListViewModel
+    let item: MindMapItem
+    
+    @State var inRename: Bool = false
+    @State var newName: String = ""
+    @FocusState private var focused: Bool
+    
+    var body: some View {
+        if let idx = model.mMaps.firstIndex(where: { $0 == item }) {
+            HStack {
+                if inRename {
+                    TextField(item.name,
+                              text: $newName,
+                              onCommit: { if newName.count > 0 { item.name = newName }; focused = false; inRename.toggle() }
+                    )
+                    .focused($focused)
+                } else {
+                    Button(item.name) {
+                        model.seleted = idx
+                    }
+                }
+            }
+            .background {
+                RoundedRectangle(cornerRadius: 3)
+                    .fill( model.seleted == idx ? Color.gray : Color.clear )
+            }
+            .contextMenu {
+                Button("Rename") {
+                    newName = item.name
+                    focused = true
+                    
+                    withAnimation {
+                        inRename = true
+                    }
+                }
+                
+                Divider()
+                
+                Button("Delete") {
+                    withAnimation {
+                        model.delete(idx)
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
 
 /////////////////////
 /// Preview
