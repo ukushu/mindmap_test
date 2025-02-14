@@ -2,14 +2,17 @@
 import SwiftUI
 
 class MMEditorViewModel: ObservableObject {
-    @Published var mMaps: [MindMapItem] = [
-        MindMapItem.init(mesh: Mesh.sampleMesh(), selection: SelectionHandler.init())
-    ]
+    @Published var mMaps: [MindMapItem]
     
     @Published var selected: MindMapItem? // = nil
     var selectedIdx: Int? {
         guard let selected else { return nil }
         return mMaps.firstIndex(of: selected)
+    }
+    
+    init() {
+        self.mMaps = [MindMapItem.init(mesh: Mesh.sampleMesh(), selection: SelectionHandler.init())]
+        self.selected = mMaps.first
     }
     
     func add() {

@@ -26,7 +26,6 @@ struct MMEditorView: View {
                 Button("-") {
                     selected.removeSelectedNodes()
                 }
-                .disabled(selected.selection.selectedNodeIDs.count == 0)
             }
             
             Spacer()
