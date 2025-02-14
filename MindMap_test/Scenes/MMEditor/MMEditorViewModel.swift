@@ -55,4 +55,18 @@ class MindMapItem: ObservableObject, Identifiable, Equatable {
     static func == (lhs: MindMapItem, rhs: MindMapItem) -> Bool {
         lhs.id == rhs.id
     }
+    
+    func addNode(_ text: String) {
+        mesh.addNode(Node.init(id: NodeID(), position: CGPoint.init(x: 20, y: 40), text: text))
+    }
+    
+    func removeSelectedNodes() {
+        selection.selectedNodeIDs.forEach{ item in
+            mesh.nodes.removeFirst(where: { $0.id == item })
+        }
+        
+        selection.selectClear()
+        
+        mesh.rebuildLinks()
+    }
 }

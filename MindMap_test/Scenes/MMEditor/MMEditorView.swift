@@ -7,10 +7,33 @@ struct MMEditorView: View {
     
     var body: some View {
         VStack(spacing: 0) {
+            TopMenuBar()
+            
             EditorCanvas()
             
             TabsPanelView(model: model)
         }
+    }
+    
+    @ViewBuilder
+    func TopMenuBar() -> some View {
+        HStack(spacing: 10) {
+            if let selectedIdx = model.seleted, selectedIdx <= model.mMaps.count {
+                Button("+") {
+                    model.mMaps[selectedIdx].addNode("Bla")
+                }
+                
+                Button("-") {
+                    if model.mMaps[selectedIdx].selection.selectedNodeIDs.count > 0 {
+                        model.mMaps[selectedIdx].removeSelectedNodes()
+                    }
+                }
+            }
+            
+            Spacer()
+        }
+        .padding(.horizontal, 10)
+        .frame(height: 30)
     }
     
     @ViewBuilder

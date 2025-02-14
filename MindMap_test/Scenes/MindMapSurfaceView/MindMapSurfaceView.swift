@@ -1,7 +1,6 @@
 
 import SwiftUI
 
-
 struct MindMapSurfaceView: View {
     @ObservedObject var model: MindMapItem
     
@@ -17,22 +16,6 @@ struct MindMapSurfaceView: View {
     @State var initialPortalPosition: CGPoint?
     
     var body: some View {
-        VStack {
-            TopMenu()
-            
-            Container()
-        }
-    }
-    
-    func TopMenu() -> some View {
-        HStack {
-            Button("Add node") {
-                model.mesh.addNode(Node.init(id: NodeID(), position: CGPoint.init(x: 20, y: 40), text: "Bla"))
-            }
-        }
-    }
-    
-    func Container() -> some View {
         GeometryReader { geometry in
             ZStack {
                 MMColors.mapBg
