@@ -7,7 +7,7 @@ class Mesh: ObservableObject, Identifiable {
         rootNodeID.uuidString
     }
     
-    let rootNodeID: NodeID
+    var rootNodeID: NodeID { nodes.first?.id ?? UUID() }
     @Published var nodes: [Node] = []
     @Published var editingText: String
     
@@ -15,9 +15,23 @@ class Mesh: ObservableObject, Identifiable {
     
     init() {
         self.editingText = ""
+        
         let root = Node(text: "root")
-        rootNodeID = root.id
+        
         addNode(root)
+    }
+    
+    func copiedInstance() -> Mesh {
+        let copy = Mesh()
+        copy.nodes = self.nodes
+        copy.editingText = self.editingText
+        copy.links = self.links
+        
+        copy.nodes.indices.forEach {
+            copy.nodes[$0].id = NodeID()
+        }
+        
+        return copy
     }
     
     var edges: [Edge] = [] {

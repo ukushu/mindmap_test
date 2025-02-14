@@ -27,6 +27,10 @@ class MindMapListViewModel: ObservableObject {
             mMaps.remove(at: idx)
         }
     }
+    
+    func duplicate(_ idx: Int) {
+        mMaps.insert( MindMapItem(mMaps[idx]) , at: idx+1)
+    }
 }
 
 class MindMapItem: ObservableObject, Identifiable, Equatable {
@@ -40,6 +44,12 @@ class MindMapItem: ObservableObject, Identifiable, Equatable {
         self.mesh = mesh
         self.selection = selection
         self.name = "Mind Map 1"
+    }
+    
+    init(_ item: MindMapItem) {
+        self.mesh = item.mesh.copiedInstance()
+        self.selection = SelectionHandler()
+        self.name = item.name
     }
     
     static func == (lhs: MindMapItem, rhs: MindMapItem) -> Bool {

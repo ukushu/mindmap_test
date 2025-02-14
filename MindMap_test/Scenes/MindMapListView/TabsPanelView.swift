@@ -71,6 +71,10 @@ fileprivate struct MMapTab: View {
                     
                     Divider()
                     
+                    Button("Duplicate") {
+                        model.duplicate(idx)
+                    }
+                    
                     Button("Delete") {
                         withAnimation {
                             model.delete(idx)
