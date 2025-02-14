@@ -1,7 +1,7 @@
 
 import SwiftUI
 
-class MindMapListViewModel: ObservableObject {
+class MMEditorViewModel: ObservableObject {
     @Published var mMaps: [MindMapItem] = [
         MindMapItem.init(mesh: Mesh.sampleMesh(), selection: SelectionHandler.init())
     ]

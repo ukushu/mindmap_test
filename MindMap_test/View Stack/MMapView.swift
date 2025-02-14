@@ -1,13 +1,12 @@
 
 import SwiftUI
 
-struct MapView: View {
+struct MMapView: View {
     @ObservedObject var selection: SelectionHandler
     @ObservedObject var mesh: Mesh
     
     var body: some View {
         ZStack {
-            Rectangle().fill(Color.green)
             EdgeMapView(edges: $mesh.links)
             NodeMapView(selection: selection, nodes: $mesh.nodes)
         }
@@ -29,6 +28,6 @@ struct MapView_Previews: PreviewProvider {
         }
         mesh.connect(child1, to: child2)
         let selection = SelectionHandler()
-        return MapView(selection: selection, mesh: mesh)
+        return MMapView(selection: selection, mesh: mesh)
     }
 }

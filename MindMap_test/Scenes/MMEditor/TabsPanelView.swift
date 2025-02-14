@@ -3,41 +3,37 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 struct TabsPanelView: View {
-    @ObservedObject var model: MindMapListViewModel
+    @ObservedObject var model: MMEditorViewModel
     
     let rows: [GridItem] = [GridItem(.flexible(minimum: 10, maximum: 120), spacing: 4, alignment: .leading) ]
     
     @State private var dragging: MindMapItem?
     
     var body: some View {
-        VStack {
-            Spacer()
-            
-            ScrollView(.horizontal, showsIndicators: false) {
-                LazyHGrid(rows: rows) {
-                    ForEach(model.mMaps) { item in
-                        MMapTabDraggable(model: model, item: item)
-                    }
-                    
-                    Button("+") {
-                        withAnimation {
-                            model.add()
-                        }
-                    }
-                    
-                    Spacer()
+        ScrollView(.horizontal, showsIndicators: false) {
+            LazyHGrid(rows: rows) {
+                ForEach(model.mMaps) { item in
+                    MMapTabDraggable(model: model, item: item)
                 }
-                .animation(.default, value: model.mMaps)
-                .frame(height: 20)
+                
+                Button("+") {
+                    withAnimation {
+                        model.add()
+                    }
+                }
+                
+                Spacer()
             }
-            .padding(EdgeInsets(top: 0, leading: 5, bottom: 6, trailing: 5))
-            .background( Color(hex: 0x303030) )
+            .animation(.default, value: model.mMaps)
+            .frame(height: 20)
         }
+        .padding(EdgeInsets(top: 0, leading: 5, bottom: 6, trailing: 5))
+        .background( Color(hex: 0x303030) )
     }
 }
 
 extension TabsPanelView {
-    func MMapTabDraggable(model: MindMapListViewModel, item: MindMapItem) -> some View {
+    func MMapTabDraggable(model: MMEditorViewModel, item: MindMapItem) -> some View {
         MMapTab(model: model, item: item)
             .overlay(dragging?.id == item.id ? Color.white.opacity(0.8) : Color.clear)
             .onDrag {
@@ -49,7 +45,7 @@ extension TabsPanelView {
 }
 
 fileprivate struct MMapTab: View {
-    @ObservedObject var model: MindMapListViewModel
+    @ObservedObject var model: MMEditorViewModel
     let item: MindMapItem
     
     @State var inRename: Bool = false

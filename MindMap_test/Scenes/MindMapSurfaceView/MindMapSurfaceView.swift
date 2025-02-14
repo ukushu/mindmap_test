@@ -35,9 +35,9 @@ struct MindMapSurfaceView: View {
     func Container() -> some View {
         GeometryReader { geometry in
             ZStack {
-                Rectangle().fill(Color.red)
+                MMColors.mapBg
                 
-                MapView(selection: model.selection, mesh: model.mesh)
+                MMapView(selection: model.selection, mesh: model.mesh)
                     .scaleEffect(self.zoomScale)
                     .offset(
                         x: self.portalPosition.x + self.dragOffset.width,
@@ -47,6 +47,7 @@ struct MindMapSurfaceView: View {
             .gesture( myDragGesture(geometry: geometry) )
             .gesture( myNagnificationGesture(geometry: geometry) )
         }
+        .clipped()
     }
 }
 
