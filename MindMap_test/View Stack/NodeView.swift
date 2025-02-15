@@ -46,7 +46,7 @@ struct NodeView: View {
         }
     }
     
-    let offset: CGFloat = 30
+    let offset: CGFloat = 18
     
     @ViewBuilder
     func EditNodePanel(_ sel: Bool) -> some View {
