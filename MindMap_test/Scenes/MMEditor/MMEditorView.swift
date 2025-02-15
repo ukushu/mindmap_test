@@ -5,6 +5,8 @@ import MoreSwiftUI
 struct MMEditorView: View {
     @StateObject var model: MMEditorViewModel = MMEditorViewModel()
     
+    @State var color = Color.black
+    
     var body: some View {
         VStack(spacing: 0) {
             TopMenuBar()
@@ -26,6 +28,44 @@ struct MMEditorView: View {
                 Button("-") {
                     selected.removeSelectedNodes()
                 }
+                
+                Button("+ child") {
+                    
+                }
+                
+                Button("Relationship") {
+                    
+                }
+                
+                Button("Boundary") {
+                    
+                }
+                
+                PopoverButtSimple(label: { Text("Modify") }) {
+                    VStack(alignment: .leading, spacing: 5) {
+                        CtxMenuBtn(sfImg: "trash", lbl: "Note") { }
+                        CtxMenuBtn(sfImg: "trash", lbl: "Label") { }
+                        CtxMenuBtn(sfImg: "trash", lbl: "Task") { }
+                    }
+                    .buttonStyle(BtnUksStyle.default)
+                    .padding(15)
+                }
+                
+                PopoverButtSimple(label: { Text("Style") }) {
+                    VStack(alignment: .leading, spacing: 5) {
+                        CtxMenuBtn(sfImg: "trash", lbl: "Circle") { }
+                        CtxMenuBtn(sfImg: "trash", lbl: "Capsule") { }
+                        CtxMenuBtn(sfImg: "trash", lbl: "Rectangle") { }
+                        CtxMenuBtn(sfImg: "trash", lbl: "RoundedRectangle") { }
+                    }
+                    .buttonStyle(BtnUksStyle.default)
+                    .padding(15)
+                }
+                
+//                if let sel = model.selected {
+                    UksColorPicker(color: $color)
+                        .frame(width: 17, height: 17)
+//                }
             }
             
             Spacer()
