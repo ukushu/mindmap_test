@@ -1,5 +1,6 @@
 
 import SwiftUI
+import Essentials
 
 struct NodeMapView: View {
     @ObservedObject var selection: SelectionHandler
@@ -17,7 +18,7 @@ struct NodeMapView: View {
                 NodeView(node: node, selection: self.selection)
                     .offset(x: node.position.x, y: node.position.y)
                     .onTapGesture {
-                        if NSApp.currentEvent!.modifierFlags.contains(.shift) {
+                        if NSApp.currentEvent!.modifierFlags.check(oneOf: [.shift, .command]) {
                             self.selection.selectNodeSwitch(node)
                         } else {
                             self.selection.selectNode(node)
