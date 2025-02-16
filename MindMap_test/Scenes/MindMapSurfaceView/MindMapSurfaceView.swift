@@ -2,7 +2,7 @@
 import SwiftUI
 
 struct MindMapSurfaceView: View {
-    @ObservedObject var model: MindMapItem
+    @ObservedObject var model: MindMapFile
     
     //dragging
     @State var portalPosition: CGPoint = .zero
@@ -172,7 +172,7 @@ private extension MindMapSurfaceView {
 
 struct SurfaceView_Previews: PreviewProvider {
     static var previews: some View {
-        let model = MindMapItem(mesh: Mesh.sampleMesh(), selection: SelectionHandler())
+        let model = MindMapFile(mesh: Mesh.sampleMesh(), selection: SelectionHandler())
         
         return MindMapSurfaceView(model: model)
     }

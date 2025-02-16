@@ -22,8 +22,8 @@ struct MapView_Previews: PreviewProvider {
     static var previews: some View {
         let mesh = Mesh()
         
-        let child1 = Node(position: CGPoint(x: 100, y: 200), text: "child 1")
-        let child2 = Node(position: CGPoint(x: -100, y: 200), text: "child 2")
+        let child1 = Node(position: CGPoint(x: 100, y: 200), text: "child 1", nodeStyle: .sub)
+        let child2 = Node(position: CGPoint(x: -100, y: 200), text: "child 2", nodeStyle: .sub)
         
         [child1, child2].forEach {
             mesh.addNode($0)

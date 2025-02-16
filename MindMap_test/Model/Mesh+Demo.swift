@@ -15,25 +15,26 @@ extension Mesh {
             let node = mesh.addChild(mesh.rootNode(), at: point)
             mesh.updateNodeText(node, string: name)
         }
+        
         return mesh
     }
     
-    func addChildrenRecursive(to node: Node, distance: CGFloat, generation: Int) {
-        let labels = ["A", "B", "C", "D", "E", "F"]
-        guard generation < labels.count else {
-            return
-        }
-        
-        let childCount = Int.random(in: 1..<4)
-        var count = 0
-        while count < childCount {
-            count += 1
-            let position = positionForNewChild(node, length: distance)
-            let child = addChild(node, at: position)
-            updateNodeText(child, string: "\(labels[generation])\(count + 1)")
-            addChildrenRecursive(to: child, distance: distance + 200.0, generation: generation + 1)
-        }
-    }
+//    func addChildrenRecursive(to node: Node, distance: CGFloat, generation: Int) {
+//        let labels = ["A", "B", "C", "D", "E", "F"]
+//        guard generation < labels.count else {
+//            return
+//        }
+//        
+//        let childCount = Int.random(in: 1..<4)
+//        var count = 0
+//        while count < childCount {
+//            count += 1
+//            let position = positionForNewChild(node, length: distance)
+//            let child = addChild(node, at: position)
+//            updateNodeText(child, string: "\(labels[generation])\(count + 1)")
+//            addChildrenRecursive(to: child, distance: distance + 200.0, generation: generation + 1)
+//        }
+//    }
 }
 
 extension Int {

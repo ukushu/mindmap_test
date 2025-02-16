@@ -7,7 +7,7 @@ struct TabsPanelView: View {
     
     let rows: [GridItem] = [GridItem(.flexible(minimum: 10, maximum: 120), spacing: 4, alignment: .leading) ]
     
-    @State private var dragging: MindMapItem?
+    @State private var dragging: MindMapFile?
     
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
@@ -33,7 +33,7 @@ struct TabsPanelView: View {
 }
 
 extension TabsPanelView {
-    func MMapTabDraggable(model: MMEditorViewModel, item: MindMapItem) -> some View {
+    func MMapTabDraggable(model: MMEditorViewModel, item: MindMapFile) -> some View {
         MMapTab(model: model, item: item)
             .onDrag {
                 self.dragging = item
@@ -45,7 +45,7 @@ extension TabsPanelView {
 
 fileprivate struct MMapTab: View {
     @ObservedObject var model: MMEditorViewModel
-    let item: MindMapItem
+    let item: MindMapFile
     
     @State var inRename: Bool = false
     @State var newName: String = ""
@@ -105,9 +105,9 @@ fileprivate struct MMapTab: View {
 }
 
 fileprivate struct DragRelocateDelegate: DropDelegate {
-    let item: MindMapItem
-    @Binding var listData: [MindMapItem]
-    @Binding var current: MindMapItem?
+    let item: MindMapFile
+    @Binding var listData: [MindMapFile]
+    @Binding var current: MindMapFile?
     
     func dropEntered(info: DropInfo) {
         if item != current {

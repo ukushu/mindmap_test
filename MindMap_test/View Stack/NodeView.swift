@@ -78,9 +78,9 @@ struct NodeView: View {
 struct NodeView_Previews: PreviewProvider {
     static var previews: some View {
         let selection1 = SelectionHandler()
-        let node1 = Node(text: "hello world")
+        let node1 = Node(text: "hello world", nodeStyle: .sub)
         let selection2 = SelectionHandler()
-        let node2 = Node(text: "I'm selected, look at me")
+        let node2 = Node(text: "I'm selected, look at me", nodeStyle: .sub)
         selection2.selectNode(node2)
         
         return VStack {

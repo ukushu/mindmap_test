@@ -6,8 +6,16 @@ typealias NodeID = UUID
 
 struct Node: Identifiable {
     var id: NodeID = NodeID()
-    var position: CGPoint = .zero
-    var text: String = ""
+    var position: CGPoint
+    var text: String
+    
+    var nodeStyle: NodeStyleV
+    
+    init(position: CGPoint = .zero, text: String = "", nodeStyle: NodeStyle) {
+        self.position = position
+        self.text = text
+        self.nodeStyle = nodeStyle.asStyle()
+    }
     
     var visualID: String {
         return id.uuidString
@@ -20,3 +28,5 @@ extension Node {
         return lhs.id == rhs.id
     }
 }
+
+

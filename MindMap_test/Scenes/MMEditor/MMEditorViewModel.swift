@@ -2,21 +2,21 @@
 import SwiftUI
 
 class MMEditorViewModel: ObservableObject {
-    @Published var mMaps: [MindMapItem]
+    @Published var mMaps: [MindMapFile]
     
-    @Published var selected: MindMapItem? // = nil
+    @Published var selected: MindMapFile? // = nil
     var selectedIdx: Int? {
         guard let selected else { return nil }
         return mMaps.firstIndex(of: selected)
     }
     
     init() {
-        self.mMaps = [MindMapItem.init(mesh: Mesh.sampleMesh(), selection: SelectionHandler.init())]
+        self.mMaps = [MindMapFile.init(mesh: Mesh.sampleMesh(), selection: SelectionHandler.init())]
         self.selected = mMaps.first
     }
     
     func add() {
-        mMaps.append( MindMapItem(mesh: Mesh.sampleMesh(), selection: SelectionHandler(), name: "Target \(mMaps.count + 1)") )
+        mMaps.append( MindMapFile(mesh: Mesh.sampleMesh(), selection: SelectionHandler(), name: "Target \(mMaps.count + 1)") )
         
         if selected == nil {
             selected = mMaps.first
@@ -40,11 +40,11 @@ class MMEditorViewModel: ObservableObject {
     }
     
     func duplicate(_ idx: Int) {
-        mMaps.insert( MindMapItem(mMaps[idx]) , at: idx+1)
+        mMaps.insert( MindMapFile(mMaps[idx]) , at: idx+1)
     }
 }
 
-class MindMapItem: ObservableObject, Identifiable, Equatable {
+class MindMapFile: ObservableObject, Identifiable, Equatable {
     @Published var mesh: Mesh
     @Published var selection: SelectionHandler
     @Published var name: String
@@ -57,18 +57,18 @@ class MindMapItem: ObservableObject, Identifiable, Equatable {
         self.name = name
     }
     
-    init(_ item: MindMapItem) {
+    init(_ item: MindMapFile) {
         self.mesh = item.mesh.copiedInstance()
         self.selection = SelectionHandler()
         self.name = item.name
     }
     
-    static func == (lhs: MindMapItem, rhs: MindMapItem) -> Bool {
+    static func == (lhs: MindMapFile, rhs: MindMapFile) -> Bool {
         lhs.id == rhs.id
     }
     
     func addNode(_ text: String) {
-        mesh.addNode(Node.init(id: NodeID(), position: CGPoint.init(x: 20, y: 40), text: text))
+        mesh.addNode(Node.init(position: CGPoint.init(x: 20, y: 40), text: text, nodeStyle: .sub))
     }
     
     func removeSelectedNodes() {
