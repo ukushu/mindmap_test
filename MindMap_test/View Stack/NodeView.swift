@@ -1,5 +1,6 @@
 
 import SwiftUI
+import MoreSwiftUI
 
 struct NodeView: View {
     static let width = CGFloat(100)
@@ -19,12 +20,13 @@ struct NodeView: View {
                 .overlay { EditNodePanel(isSelected) }
             
             self.node.nodeStyle.shape.asView()
-                .fill(Color.yellow)
+                .fill(self.node.nodeStyle.colorBg)
                 .overlay( self.node.nodeStyle.shape.asView().stroke(Color.black, lineWidth: 3) )
                 .overlay(
                     Text(node.text)
-                    .multilineTextAlignment(.center)
-                    .padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
+                        .multilineTextAlignment(.center)
+                        .padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
+                        .foregroundStyle(self.node.nodeStyle.colorFr)
                 )
                 .frame(width: NodeView.width, height: NodeView.width, alignment: .center)
         }
@@ -52,11 +54,32 @@ struct NodeView: View {
     func EditNodePanel(_ sel: Bool) -> some View {
         if sel {
             HStack(spacing: 10) {
-                Text.sfSymbol("trash").onTapGesture { self.node.nodeStyle.shape = .circle }
-                Text.sfSymbol("trash").onTapGesture { self.node.nodeStyle.shape = .hexagon }
-                Text.sfSymbol("trash").onTapGesture { self.node.nodeStyle.shape = .rect }
-                Text.sfSymbol("trash").onTapGesture { self.node.nodeStyle.shape = .roundedRect }
-                Text.sfSymbol("trash").onTapGesture { self.node.nodeStyle.shape = .capsule }
+                PopoverButtSimple( label: { Text("[]") } ) {
+                    VStack {
+                        Button(action: { self.node.nodeStyle.shape = .circle }) {
+                            MMShape.circle.asView().frame(width: 30, height: 15)
+                        }
+                        
+                        Button(action: { self.node.nodeStyle.shape = .hexagon }) {
+                            MMShape.hexagon.asView().frame(width: 30, height: 15)
+                        }
+                        
+                        Button(action: { self.node.nodeStyle.shape = .rect }) {
+                            MMShape.rect.asView().frame(width: 30, height: 15)
+                        }
+                        
+                        Button(action: { self.node.nodeStyle.shape = .roundedRect }) {
+                            RoundedRectangle(cornerRadius: 4).frame(width: 30, height: 15)
+                        }
+                        
+                        Button(action: { self.node.nodeStyle.shape = .capsule }) {
+                            MMShape.capsule.asView().frame(width: 30, height: 15)
+                        }
+                    }
+                    .padding(13)
+                    .buttonStyle(BtnUksStyle.default)
+                }
+                
             }
             .padding(10)
             .background {
@@ -64,6 +87,7 @@ struct NodeView: View {
                     .fill( Color.gray )
             }
             .offset(x: CGFloat((NodeView.width + 12)/2 + offset), y: CGFloat((NodeView.width + 12)/2 + offset) )
+            .buttonStyle(BtnUksStyle.default)
         } else {
             EmptyView()
         }

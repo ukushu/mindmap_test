@@ -19,6 +19,8 @@ extension NodeStyle {
 
 struct NodeStyleItem {
     var shape: MMShape
+    var colorBg: Color = .yellow
+    var colorFr: Color = .black
 }
 
 enum MMShape {
