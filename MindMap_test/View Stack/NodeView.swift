@@ -18,9 +18,9 @@ struct NodeView: View {
                 .frame(width: NodeView.width + 12, height: NodeView.width + 12, alignment: .center)
                 .overlay { EditNodePanel(isSelected) }
             
-            RoundedRectangle(cornerRadius: 20)
+            self.node.nodeStyle.shape.asView()
                 .fill(Color.yellow)
-                .overlay( RoundedRectangle(cornerRadius: 20).stroke(Color.black, lineWidth: 3) )
+                .overlay( self.node.nodeStyle.shape.asView().stroke(Color.black, lineWidth: 3) )
                 .overlay(
                     Text(node.text)
                     .multilineTextAlignment(.center)
@@ -34,10 +34,10 @@ struct NodeView: View {
     func SelectedView(_ sel: Bool) -> some View {
         if sel {
             ZStack {
-                RoundedRectangle(cornerRadius: 25)
+                self.node.nodeStyle.shape.asView()
                     .stroke(Color.blue.opacity(1), lineWidth: 1)
                 
-                RoundedRectangle(cornerRadius: 25)
+                self.node.nodeStyle.shape.asView()
                     .stroke(Color.blue, lineWidth: 2)
                     .blur(radius: 3)
             }
@@ -52,9 +52,11 @@ struct NodeView: View {
     func EditNodePanel(_ sel: Bool) -> some View {
         if sel {
             HStack(spacing: 10) {
-                Text.sfSymbol("trash")
-                Text.sfSymbol("trash")
-                Text.sfSymbol("trash")
+                Text.sfSymbol("trash").onTapGesture { self.node.nodeStyle.shape = .circle }
+                Text.sfSymbol("trash").onTapGesture { self.node.nodeStyle.shape = .hexagon }
+                Text.sfSymbol("trash").onTapGesture { self.node.nodeStyle.shape = .rect }
+                Text.sfSymbol("trash").onTapGesture { self.node.nodeStyle.shape = .roundedRect }
+                Text.sfSymbol("trash").onTapGesture { self.node.nodeStyle.shape = .capsule }
             }
             .padding(10)
             .background {

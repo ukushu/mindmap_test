@@ -9,12 +9,12 @@ struct Node: Identifiable {
     var position: CGPoint
     var text: String
     
-    var nodeStyle: NodeStyleV
+    var nodeStyle: NodeStyleItem
     
     init(position: CGPoint = .zero, text: String = "", nodeStyle: NodeStyle) {
         self.position = position
         self.text = text
-        self.nodeStyle = nodeStyle.asStyle()
+        self.nodeStyle = nodeStyle.style
     }
     
     var visualID: String {
