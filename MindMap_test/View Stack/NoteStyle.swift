@@ -6,6 +6,13 @@ enum NodeStyle {
     case sub
 }
 
+enum NodeShape {
+    case roundedRect
+    case hexagon
+    case capsule
+    case rect
+}
+
 extension NodeStyle {
     var style: NodeStyleItem {
         switch self {
@@ -18,28 +25,18 @@ extension NodeStyle {
 }
 
 struct NodeStyleItem {
-    var shape: MMShape
+    var shape: NodeShape
     var colorBg: Color = .yellow
     var colorFr: Color = .black
 }
 
-enum MMShape {
-    case roundedRect
-    case hexagon
-    case circle
-    case capsule
-    case rect
-}
-
-extension MMShape {
+extension NodeShape {
     func asView() -> AnyShape  {
         switch self {
         case .roundedRect:
             AnyShape( RoundedRectangle(cornerRadius: 25) )
         case .hexagon:
             AnyShape( HexagonShape() )
-        case .circle:
-            AnyShape( Circle() )
         case .rect:
             AnyShape( Rectangle() )
         case .capsule:

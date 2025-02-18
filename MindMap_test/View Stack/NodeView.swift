@@ -14,22 +14,29 @@ struct NodeView: View {
     }
     
     var body: some View {
-        ZStack {
-            SelectedView(isSelected)
-                .frame(width: NodeView.width + 12, height: NodeView.width + 12, alignment: .center)
-                .overlay { EditNodePanel(isSelected) }
-            
-            self.node.nodeStyle.shape.asView()
-                .fill(self.node.nodeStyle.colorBg)
-                .overlay( self.node.nodeStyle.shape.asView().stroke(Color.black, lineWidth: 3) )
-                .overlay(
-                    Text(node.text)
-                        .multilineTextAlignment(.center)
-                        .padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
-                        .foregroundStyle(self.node.nodeStyle.colorFr)
-                )
-                .frame(width: NodeView.width, height: NodeView.width, alignment: .center)
-        }
+        Text(node.text)
+            .font(Node.font)
+            .multilineTextAlignment(.center)
+            .foregroundStyle(node.nodeStyle.colorFr)
+//            .fixedSize()
+            .frame(minHeight: 40)
+            .padding(EdgeInsets(horizontal: 20, vertical: 14) )
+            .background {
+                VStack(spacing: 0){
+                    ZStack {
+                        SelectedView(isSelected)
+                            .padding(12)
+                        
+                        self.node.nodeStyle.shape.asView()
+                            .fill(node.nodeStyle.colorBg)
+                            .overlay( node.nodeStyle.shape.asView().stroke(Color.black, lineWidth: 3) )
+                    }
+                    
+                    EditNodePanel(isSelected)
+                        .offset(y: 15)
+                        .padding(.bottom, -100)
+                }
+            }
     }
     
     @ViewBuilder
@@ -56,16 +63,12 @@ struct NodeView: View {
             HStack(spacing: 10) {
                 PopoverButtSimple( label: { Text("[]") } ) {
                     VStack {
-                        Button(action: { self.node.nodeStyle.shape = .circle }) {
-                            MMShape.circle.asView().frame(width: 30, height: 15)
-                        }
-                        
                         Button(action: { self.node.nodeStyle.shape = .hexagon }) {
-                            MMShape.hexagon.asView().frame(width: 30, height: 15)
+                            NodeShape.hexagon.asView().frame(width: 30, height: 15)
                         }
                         
                         Button(action: { self.node.nodeStyle.shape = .rect }) {
-                            MMShape.rect.asView().frame(width: 30, height: 15)
+                            NodeShape.rect.asView().frame(width: 30, height: 15)
                         }
                         
                         Button(action: { self.node.nodeStyle.shape = .roundedRect }) {
@@ -73,20 +76,18 @@ struct NodeView: View {
                         }
                         
                         Button(action: { self.node.nodeStyle.shape = .capsule }) {
-                            MMShape.capsule.asView().frame(width: 30, height: 15)
+                            NodeShape.capsule.asView().frame(width: 30, height: 15)
                         }
                     }
                     .padding(13)
                     .buttonStyle(BtnUksStyle.default)
                 }
-                
             }
             .padding(10)
             .background {
                 RoundedRectangle(cornerRadius: 5)
                     .fill( Color.gray )
             }
-            .offset(x: CGFloat((NodeView.width + 12)/2 + offset), y: CGFloat((NodeView.width + 12)/2 + offset) )
             .buttonStyle(BtnUksStyle.default)
         } else {
             EmptyView()

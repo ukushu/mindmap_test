@@ -6,7 +6,7 @@ extension Mesh {
     static func sampleMesh() -> Mesh {
         let mesh = Mesh()
         
-        mesh.updateNodeText(mesh.rootNode(), string: "New note 111")
+        mesh.updateNodeText(mesh.rootNode(), string: "New note 111 22222 33333 44444 5555")
         
         [(0, "mind 1"),
          (120, "mind 2"),

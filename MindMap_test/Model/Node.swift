@@ -1,6 +1,8 @@
 
 import Foundation
 import CoreGraphics
+import MoreSwiftUI
+import SwiftUI
 
 typealias NodeID = UUID
 
@@ -10,6 +12,8 @@ struct Node: Identifiable {
     var text: String
     
     var nodeStyle: NodeStyleItem
+    
+    static var font: Font = Font.system(size: 13)
     
     init(position: CGPoint = .zero, text: String = "", nodeStyle: NodeStyle) {
         self.position = position
