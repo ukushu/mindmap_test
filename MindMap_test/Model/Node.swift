@@ -6,6 +6,8 @@ import SwiftUI
 
 typealias NodeID = UUID
 
+// Color(hex:0x485967)
+
 struct Node: Identifiable {
     var id: NodeID = NodeID()
     var position: CGPoint

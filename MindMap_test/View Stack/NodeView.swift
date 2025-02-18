@@ -9,6 +9,9 @@ struct NodeView: View {
     
     @ObservedObject var selection: SelectionHandler
     
+    @State var bgColor: Color = .black
+    @State var frColor: Color = .white
+    
     var isSelected: Bool {
         return selection.checkIsSelected(node)
     }
@@ -17,19 +20,20 @@ struct NodeView: View {
         Text(node.text)
             .font(Node.font)
             .multilineTextAlignment(.center)
-            .foregroundStyle(node.nodeStyle.colorFr)
-//            .fixedSize()
+            .foregroundStyle(frColor)
             .frame(minHeight: 40)
-            .padding(EdgeInsets(horizontal: 20, vertical: 14) )
+            .padding( EdgeInsets(horizontal: 20, vertical: 14) )
             .background {
-                VStack(spacing: 0){
+                VStack(spacing: 0) {
                     ZStack {
-                        SelectedView(isSelected)
-                            .padding(12)
+//                        SelectedView(isSelected)
+//                            .padding(12)
                         
                         self.node.nodeStyle.shape.asView()
                             .fill(node.nodeStyle.colorBg)
-                            .overlay( node.nodeStyle.shape.asView().stroke(Color.black, lineWidth: 3) )
+                            .overlay(
+                                self.node.nodeStyle.shape.asScribbleView(isSelected: isSelected)
+                            )
                     }
                     
                     EditNodePanel(isSelected)
@@ -61,7 +65,7 @@ struct NodeView: View {
     func EditNodePanel(_ sel: Bool) -> some View {
         if sel {
             HStack(spacing: 10) {
-                PopoverButtSimple( label: { Text("[]") } ) {
+                PopoverButtSimple( label: { Text("[]").fixedSize() } ) {
                     VStack {
                         Button(action: { self.node.nodeStyle.shape = .hexagon }) {
                             NodeShape.hexagon.asView().frame(width: 30, height: 15)
@@ -82,6 +86,14 @@ struct NodeView: View {
                     .padding(13)
                     .buttonStyle(BtnUksStyle.default)
                 }
+                
+                UksColorPicker(color: $bgColor)
+                    .frame(width: 15, height: 15)
+                    .onChange(of: bgColor) { _, col2 in self.node.nodeStyle.colorBg = col2 }
+                
+                UksColorPicker(color: $frColor)
+                    .frame(width: 15, height: 15)
+                    .onChange(of: frColor) { _, col2 in self.node.nodeStyle.colorFr = col2 }
             }
             .padding(10)
             .background {

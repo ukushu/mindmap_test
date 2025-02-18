@@ -19,7 +19,6 @@ struct HexagonShape: Shape {
     }
 }
 
-
 struct GearShape: Shape {
     var teeth: Int = 8
     var innerRadiusSize: CGFloat = 0.75
@@ -51,16 +50,141 @@ struct GearShape: Shape {
     }
 }
 
+struct RectScribbled: View {
+    var selected: Bool
+    
+    struct ApproximateRect: Shape {
+        let skew: Double
+        
+        func path(in rect: CGRect) -> Path {
+            let w = rect.width
+            let h = rect.height
+            
+            let multX1 = (w * (1 + skew) )
+            let multX2 = (w * skew)
+            let multY1 = (h * (1 + skew) )
+            let multY2 = (h * skew)
+            
+            let xBegin = 0 + multX2
+            let yBegin = 0 - multY2
+            
+            var path = Path()
+            
+            //top line
+            path.move(to: CGPoint(x: xBegin, y: yBegin) )
+            path.addQuadCurve(
+                to: CGPoint(x: xBegin + multX1, y: yBegin + multY2 ),
+                control: CGPoint(x: rect.minX + multX2/2, y: rect.minY - multY2/0.5)
+            )
+            
+            //bottom line
+            path.move(to: CGPoint(x: xBegin + multX2, y: yBegin + multY1) )
+            path.addQuadCurve(
+                to: CGPoint(x: xBegin + multX1, y: yBegin + multY1 ),
+                control: CGPoint(x: rect.minX + multX1, y: h/1.1 - multY2 )
+            )
+            
+            // left line
+            path.move(to: CGPoint(x: xBegin, y: yBegin ) )
+            path.addQuadCurve(
+                to: CGPoint(x: xBegin + multX2, y: yBegin + multY1),
+                control: CGPoint(x: rect.minX - multX2, y: rect.minY - multY2/0.5 )
+            )
+            
+            //right line
+            path.move(to: CGPoint(x: xBegin + multX1, y: yBegin ) )
+            path.addQuadCurve(
+                to: CGPoint(x: xBegin + multX1 + multX2, y: yBegin + multY1),
+                control: CGPoint(x: xBegin + multX1 , y: h/1.2 - multY2 )
+            )
+            
+            return path
+        }
+    }
+    
+    var body: some View {
+        let elems = [0,1,2]
+        let skews = [0.03, 0.02, -0.02 ]
+        let degrees: [Double] = [2, 0, 179]
+        
+        ZStack {
+            ForEach(elems, id: \.self) { i in
+                ApproximateRect(skew: skews[i])
+                    .stroke(lineWidth: 2)
+                    .foregroundColor(selected ? .blue : .black)
+                    .rotationEffect( .degrees( degrees[i]) )
+            }
+        }
+    }
+}
+
+struct CircleScribbled: View {
+    var selected: Bool
+    @State var skew: Double = [0.04, 0.03, 0.02, 0.01, -0.01, -0.02, -0.03, -0.04].randomElement()!
+    
+    struct ApproximateCircle: Shape {
+        let skew: Double
+        
+        func path(in rect: CGRect) -> Path {
+            let w = rect.width
+            let h = rect.height
+            let xBegin = rect.minX + (w * skew)
+            let yBegin = rect.midY + (h * skew)
+            var path = Path()
+            path.move(to: CGPoint(x: xBegin, y: yBegin))
+            path.addQuadCurve(
+                to: CGPoint(x: rect.midX + (w * skew), y: rect.minY + (h * skew)),
+                control: CGPoint(x: rect.minX + ((w / 2) * skew), y: rect.minY + ((h / 2) * skew))
+            )
+            path.addQuadCurve(
+                to: CGPoint(x: rect.maxX + (w * skew), y: rect.midY + (h * skew)),
+                control: CGPoint(x: rect.maxX + ((w / 2) * skew), y: rect.minY + ((h / 2) * skew))
+            )
+            path.addQuadCurve(
+                to: CGPoint(x: rect.midX + (w * skew), y: rect.maxY + (h * skew)),
+                control: CGPoint(x: rect.maxX + ((w / 2) * skew), y: rect.maxY + ((h / 2) * skew))
+            )
+            path.addQuadCurve(
+                to: CGPoint(x: xBegin, y: yBegin),
+                control: CGPoint(x: rect.minX + ((w / 2) * skew), y: rect.maxY + ((h / 2) * skew))
+            )
+            path.closeSubpath()
+            return path
+        }
+    }
+    
+    var body: some View {
+        ZStack {
+            ForEach(0..<3) { i in
+                ApproximateCircle(skew: skew)
+                    .stroke(lineWidth: 2)
+                    .foregroundColor(selected ? .blue : .black)
+                    .rotationEffect(.degrees(Double(i) * 15))
+            }
+        }
+    }
+}
+
 /////////////////////
 /// Preview
 ////////////////////
 struct Shapes_Previews: PreviewProvider {
     static var previews: some View {
         return VStack {
-            HexagonShape()
-                .frame(width: 300)
-            
-            GearShape(teeth: 8, innerRadiusSize: 0.8)
+            ZStack {
+                Rectangle()
+                    .fill(Color.yellow)
+                    
+                
+                RectScribbled(selected: false)
+            }
+            .frame(width: 500, height: 300)
+//            HexagonShape()
+//                .frame(width: 300)
+//            
+//            GearShape(teeth: 8, innerRadiusSize: 0.8)
         }
+        .padding(150)
+        .background(Color.white)
     }
 }

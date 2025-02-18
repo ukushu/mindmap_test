@@ -43,4 +43,18 @@ extension NodeShape {
             AnyShape( Capsule() )
         }
     }
+    
+    @ViewBuilder
+    func asScribbleView(isSelected: Bool) -> some View {
+        switch self {
+        case .roundedRect:
+            RectScribbled(selected: isSelected)
+        case .hexagon:
+            RectScribbled(selected: isSelected)
+        case .rect:
+            RectScribbled(selected: isSelected)
+        case .capsule:
+            CircleScribbled(selected: isSelected)
+        }
+    }
 }

@@ -7,7 +7,7 @@
       "location" : "https://gitlab.com/sergiy.vynnychenko/essentials.git",
       "state" : {
         "branch" : "master",
-        "revision" : "c818b2aa23b5095b6743476fc6e018f715ef2221"
+        "revision" : "bca6c5de5a7e5b595eeaf7d2031e659cd8a9113d"
       }
     },
     {
@@ -16,7 +16,7 @@
       "location" : "https://gitlab.com/UKS/moreswiftui.git",
       "state" : {
         "branch" : "main",
-        "revision" : "bb8dda2a97f6aba718a1fce455cd5ec4d6f7f0ad"
+        "revision" : "054ec127c2f4a2703a6e809200ff1159c0056687"
       }
     }
   ],
