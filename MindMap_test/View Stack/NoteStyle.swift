@@ -48,11 +48,11 @@ extension NodeShape {
     func asScribbleView(isSelected: Bool) -> some View {
         switch self {
         case .roundedRect:
-            RectScribbled(selected: isSelected)
+            BorderScribbleRect(selected: isSelected)
         case .hexagon:
-            RectScribbled(selected: isSelected)
+            BorderScribbleRect(selected: isSelected)
         case .rect:
-            RectScribbled(selected: isSelected)
+            BorderScribbleRect(selected: isSelected)
         case .capsule:
             CircleScribbled(selected: isSelected)
         }

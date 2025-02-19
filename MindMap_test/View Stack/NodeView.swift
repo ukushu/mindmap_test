@@ -29,8 +29,9 @@ struct NodeView: View {
 //                        SelectedView(isSelected)
 //                            .padding(12)
                         
-                        self.node.nodeStyle.shape.asView()
-                            .fill(node.nodeStyle.colorBg)
+                        FillScribbleRect(brushSize: 5, color: .green)
+//                        self.node.nodeStyle.shape.asView()
+//                            .fill(node.nodeStyle.colorBg)
                             .overlay(
                                 self.node.nodeStyle.shape.asScribbleView(isSelected: isSelected)
                             )
