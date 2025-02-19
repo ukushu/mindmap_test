@@ -29,9 +29,9 @@ struct NodeView: View {
 //                        SelectedView(isSelected)
 //                            .padding(12)
                         
-                        FillScribbleRect(brushSize: 5, color: .green)
-//                        self.node.nodeStyle.shape.asView()
-//                            .fill(node.nodeStyle.colorBg)
+                        
+                        self.node.nodeStyle.shape
+                            .asView(color: node.nodeStyle.colorBg)
                             .overlay(
                                 self.node.nodeStyle.shape.asScribbleView(isSelected: isSelected)
                             )
@@ -44,22 +44,6 @@ struct NodeView: View {
             }
     }
     
-    @ViewBuilder
-    func SelectedView(_ sel: Bool) -> some View {
-        if sel {
-            ZStack {
-                self.node.nodeStyle.shape.asView()
-                    .stroke(Color.blue.opacity(1), lineWidth: 1)
-                
-                self.node.nodeStyle.shape.asView()
-                    .stroke(Color.blue, lineWidth: 2)
-                    .blur(radius: 3)
-            }
-        } else {
-            EmptyView()
-        }
-    }
-    
     let offset: CGFloat = 18
     
     @ViewBuilder
@@ -69,11 +53,11 @@ struct NodeView: View {
                 PopoverButtSimple( label: { Text("[]").fixedSize() } ) {
                     VStack {
                         Button(action: { self.node.nodeStyle.shape = .hexagon }) {
-                            NodeShape.hexagon.asView().frame(width: 30, height: 15)
+                            NodeShape.hexagon.asShape().frame(width: 30, height: 15)
                         }
                         
                         Button(action: { self.node.nodeStyle.shape = .rect }) {
-                            NodeShape.rect.asView().frame(width: 30, height: 15)
+                            NodeShape.rect.asShape().frame(width: 30, height: 15)
                         }
                         
                         Button(action: { self.node.nodeStyle.shape = .roundedRect }) {
@@ -81,7 +65,7 @@ struct NodeView: View {
                         }
                         
                         Button(action: { self.node.nodeStyle.shape = .capsule }) {
-                            NodeShape.capsule.asView().frame(width: 30, height: 15)
+                            NodeShape.capsule.asShape().frame(width: 30, height: 15)
                         }
                     }
                     .padding(13)

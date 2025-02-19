@@ -31,7 +31,24 @@ struct NodeStyleItem {
 }
 
 extension NodeShape {
-    func asView() -> AnyShape  {
+    @ViewBuilder
+    func asView(color: Color) -> some View   {
+        switch self {
+        case .roundedRect:
+            RoundedRectangle(cornerRadius: 25)
+                .fill(color)
+        case .hexagon:
+            HexagonShape()
+                .fill(color)
+        case .rect:
+            FillScribbleRect(brushSize: 10, color: color)
+        case .capsule:
+            Capsule()
+                .fill(color)
+        }
+    }
+    
+    func asShape() -> AnyShape {
         switch self {
         case .roundedRect:
             AnyShape( RoundedRectangle(cornerRadius: 25) )
